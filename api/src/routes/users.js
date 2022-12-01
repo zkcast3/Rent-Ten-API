@@ -156,6 +156,30 @@ router.get("/verifymail/:mail", async (req, res) => {
   }
 });
 
+router.put("/editUser/:userId", async (req, res) => {
+  const {userId} = req.params;
+  const {
+    name,
+    picture,
+    sub,
+    lastname,
+    mail,
+    country,
+    authorized,
+    verified,
+    verificationCode,
+    admin,
+    favoriteshouses,
+  } = req.body;
+  try {
+    const user = await User.findByPk(userId)
+      await user.update(req.body);
+      res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.patch("/changepicture/:userID", async (req, res) => {
   const { userID } = req.params;
   const { newPicture, authID } = req.body;
