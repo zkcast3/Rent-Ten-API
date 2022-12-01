@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { MERCADOPAGO_TOKEN } = process.env;
-
+const { FRONTURL, BACKURL } = process.env;
 class PaymentService {
   async createPayment(req) {
     const url = "https://api.mercadopago.com/checkout/preferences";
@@ -26,11 +26,11 @@ class PaymentService {
         },
       },
       back_urls: {
-        failure: `localhost:4200/housedetail/mercadopago/failure/${req.body.houseId}/${req.body.code}`,
-        pending: `localhost:4200/housedetail/mercadopago/pending/${req.body.houseId}/${req.body.code}`,
-        success: `localhost:4200/housedetail/mercadopago/success/${req.body.houseId}/${req.body.code}`,
+        failure: `${FRONTURL}/housedetail/mercadopago/failure/${req.body.houseId}/${req.body.code}`,
+        pending: `${FRONTURL}/housedetail/mercadopago/pending/${req.body.houseId}/${req.body.code}`,
+        success: `${FRONTURL}/housedetail/mercadopago/success/${req.body.houseId}/${req.body.code}`,
       },
-      notification_url: "http://www.localhost:3001/mercadopago/notification",
+      notification_url: `${BACKURL}/mercadopago/notification`,
       external_reference: "MP0001",
       auto_return: "all",
     };
